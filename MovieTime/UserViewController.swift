@@ -12,7 +12,7 @@ class UserViewController: UIViewController {
 
     @IBOutlet weak var userNameTextField: UITextField!
     
-    var users: [NSManagedObject] = []
+    var users: [User] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,9 +35,10 @@ class UserViewController: UIViewController {
         
         let managedContext = appDelegate.persistentContainer.viewContext
         let entity = NSEntityDescription.entity(forEntityName: "User", in: managedContext)!
-        let user = NSManagedObject(entity: entity, insertInto: managedContext)
         
-        user.setValue(name, forKeyPath: "name")
+        let user = User(entity: entity, insertInto: managedContext)
+        
+        user.name = name
         
         var id: Int = 1
         
@@ -46,7 +47,7 @@ class UserViewController: UIViewController {
             id = userId + 1
         }
         
-        user.setValue(id, forKey: "id")
+        user.id = Int32(id)
         
         do {
             try managedContext.save()

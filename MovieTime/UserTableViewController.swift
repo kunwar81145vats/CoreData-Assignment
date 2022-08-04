@@ -10,7 +10,7 @@ import CoreData
 
 class UserTableViewController: UITableViewController {
 
-    var users: [NSManagedObject] = []
+    var users: [User] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,12 +26,12 @@ class UserTableViewController: UITableViewController {
           
         let managedContext = appDelegate.persistentContainer.viewContext
           
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "User")
+        let fetchRequest = NSFetchRequest<User>(entityName: "User")
           
         do {
             users = try managedContext.fetch(fetchRequest)
             users = users.sorted(by: { obj1, obj2 in
-                obj1.value(forKey: "id") as? Int ?? 1 < obj2.value(forKey: "id") as? Int ?? 1
+                obj1.id > obj2.id
             })
             self.tableView.reloadData()
         } catch let error as NSError {
@@ -64,7 +64,7 @@ class UserTableViewController: UITableViewController {
         {
             let user = users[indexPath.row]
 
-            cell.nameLabel.text = user.value(forKeyPath: "name") as? String
+            cell.nameLabel.text = user.name
             
             return cell
         }
@@ -100,6 +100,13 @@ class UserTableViewController: UITableViewController {
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        guard let obj = self.storyboard?.instantiateViewController(withIdentifier: "MovieTableViewController") as? MovieTableViewController else { return }
+        obj.user = users[indexPath.row]
+        self.navigationController?.pushViewController(obj, animated: true)
     }
 
 }
