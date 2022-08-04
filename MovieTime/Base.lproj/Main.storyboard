@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="eiH-BQ-KFY" style="IBUITableViewCellStyleDefault" id="BAD-nH-Ofm">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="UserCell" textLabel="eiH-BQ-KFY" style="IBUITableViewCellStyleDefault" id="BAD-nH-Ofm" customClass="UserCell" customModule="MovieTime" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="44.5" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="BAD-nH-Ofm" id="5tx-15-tYG">
@@ -34,6 +34,7 @@
                                     </subviews>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="nameLabel" destination="eiH-BQ-KFY" id="cZI-7Q-P7U"/>
                                     <segue destination="oTf-Of-wOj" kind="show" id="8WG-Xh-VyK"/>
                                 </connections>
                             </tableViewCell>
@@ -46,7 +47,7 @@
                     <navigationItem key="navigationItem" title="Users" id="1Wj-Hr-j31">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="g7f-oH-B8q">
                             <connections>
-                                <segue destination="LKN-Hd-3EM" kind="show" id="TSa-9e-lXE"/>
+                                <action selector="addUserAction:" destination="P14-BC-es7" id="Yra-H9-6dQ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -64,7 +65,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" textLabel="1ll-ws-Xly" style="IBUITableViewCellStyleDefault" id="gQ1-R2-yHZ">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="MovieCell" textLabel="1ll-ws-Xly" style="IBUITableViewCellStyleDefault" id="gQ1-R2-yHZ" customClass="MovieCell" customModule="MovieTime" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="44.5" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="gQ1-R2-yHZ" id="07Y-j3-iGu">
@@ -80,6 +81,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="movieLabel" destination="1ll-ws-Xly" id="4QW-Sa-OCD"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -159,7 +163,7 @@
         <!--User View Controller-->
         <scene sceneID="K0R-KA-yPb">
             <objects>
-                <viewController id="LKN-Hd-3EM" customClass="UserViewController" customModule="MovieTime" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UserViewController" id="LKN-Hd-3EM" customClass="UserViewController" customModule="MovieTime" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="yO7-by-cRZ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

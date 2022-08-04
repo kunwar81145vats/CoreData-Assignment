@@ -6,8 +6,11 @@
 //
 
 import UIKit
+import CoreData
 
 class UserTableViewController: UITableViewController {
+
+    var users: [NSManagedObject] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,7 +21,36 @@ class UserTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        guard let appDelegate =
+            UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+          
+        let managedContext = appDelegate.persistentContainer.viewContext
+          
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "User")
+          
+        do {
+            users = try managedContext.fetch(fetchRequest)
+            users = users.sorted(by: { obj1, obj2 in
+                obj1.value(forKey: "id") as? Int ?? 1 < obj2.value(forKey: "id") as? Int ?? 1
+            })
+            self.tableView.reloadData()
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
 
+    @IBAction func addUserAction(_ sender: Any) {
+        guard let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserViewController") as? UserViewController else { return }
+        obj.users = users
+        self.navigationController?.pushViewController(obj, animated: true)
+    }
+    
     // MARK: - Table view data source
 
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -28,18 +60,24 @@ class UserTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return users.count
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as? UserCell
+        {
+            let user = users[indexPath.row]
 
-        // Configure the cell...
-
-        return cell
+            cell.nameLabel.text = user.value(forKeyPath: "name") as? String
+            
+            return cell
+        }
+        
+        return UITableViewCell()
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.
@@ -75,13 +113,5 @@ class UserTableViewController: UITableViewController {
         return true
     }
     */
-
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
 
 }
