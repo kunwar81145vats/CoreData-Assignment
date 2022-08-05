@@ -24,7 +24,11 @@ class MovieViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        save(name: movieNameTextField.text ?? "")
+        
+        if let name = movieNameTextField.text
+        {
+            save(name: name)
+        }
     }
 
     func save(name: String) {

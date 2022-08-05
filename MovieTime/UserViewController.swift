@@ -23,7 +23,10 @@ class UserViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        save(name: userNameTextField.text ?? "")
+        if let name = userNameTextField.text
+        {
+            save(name: name)
+        }
     }
 
     func save(name: String) {
