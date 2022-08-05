@@ -29,6 +29,9 @@ class UserViewController: UIViewController {
         }
     }
 
+    //MARK: - Save user Method
+    //Parameter: - name
+    //Save New User to Core Data
     func save(name: String) {
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {

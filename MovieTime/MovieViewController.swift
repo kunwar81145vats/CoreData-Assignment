@@ -31,6 +31,9 @@ class MovieViewController: UIViewController {
         }
     }
 
+    //MARK: - Save Movie Method
+    //Parameter: - name
+    //Save New Movie to Core Data
     func save(name: String) {
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -57,7 +60,6 @@ class MovieViewController: UIViewController {
         
         do {
             try managedContext.save()
-            movies.append(movie)
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }

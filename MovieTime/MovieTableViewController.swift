@@ -20,7 +20,7 @@ class MovieTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
                 
-        
+        //Fetch request for movies list
         guard let appDelegate =
             UIApplication.shared.delegate as? AppDelegate else {
             return
@@ -35,6 +35,8 @@ class MovieTableViewController: UITableViewController {
             movies = movies.sorted(by: { obj1, obj2 in
                 obj1.value(forKey: "id") as? Int ?? 1 < obj2.value(forKey: "id") as? Int ?? 1
             })
+            
+            //Filter by user
             movies = movies.filter({ obj in
                 obj.users?.id ?? 0 == user.id
             })
@@ -44,6 +46,8 @@ class MovieTableViewController: UITableViewController {
         }
     }
     
+    //MARK: - Add Movie Action
+    //Push MovieViewController
     @IBAction func addMovieAction(_ sender: Any) {
         guard let obj = self.storyboard?.instantiateViewController(withIdentifier: "MovieViewController") as? MovieViewController else { return }
         obj.user = user
@@ -87,7 +91,7 @@ class MovieTableViewController: UITableViewController {
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
+            // Delete user from core data
             guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
                 return
             }

@@ -19,6 +19,7 @@ class UserTableViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        //Fetch request for users list
         guard let appDelegate =
             UIApplication.shared.delegate as? AppDelegate else {
             return
@@ -39,6 +40,8 @@ class UserTableViewController: UITableViewController {
         }
     }
 
+    //MARK: - Add User Action
+    //Push UserViewController
     @IBAction func addUserAction(_ sender: Any) {
         guard let obj = self.storyboard?.instantiateViewController(withIdentifier: "UserViewController") as? UserViewController else { return }
         obj.users = users
@@ -85,7 +88,7 @@ class UserTableViewController: UITableViewController {
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Delete the row from the data source
+            // Delete user from core data
             guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
                 return
             }
